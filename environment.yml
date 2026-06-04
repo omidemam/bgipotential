@@ -1,0 +1,18 @@
+﻿name: bgipotential
+channels:
+  - conda-forge
+  - defaults
+dependencies:
+  - python=3.11
+  - numpy
+  - pandas
+  - matplotlib
+  - adjusttext
+  - scikit-learn
+  - scikit-fuzzy
+  - openpyxl
+  - xlrd
+  - jupyterlab
+  - notebook
+  - ipykernel
+  - pip
