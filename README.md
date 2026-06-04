@@ -62,7 +62,7 @@ bgipotential/
   ```text
   GIPI = 0.6 * HydroRiskAvg + 0.3 * HeatRiskAvg + 0.1 * AQAvg
   ```
-
+- Uncertainty analyses: Try different weight combinations for different components of the index and their effect on the city rankings.
 - Classification: Use fuzzy C-means clustering to classify cities based on hydrological, heat, and air-quality component averages.
 
 - Visualization: Visualizes results.
