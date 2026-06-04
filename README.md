@@ -21,6 +21,14 @@ The workflow combines spatial raster and polygon inputs in ArcGIS, computes comp
 
 ---
 
+## Website
+
+Explore the project website and visual materials here:
+
+[https://natem5384.github.io/gipi.github.io/](https://natem5384.github.io/gipi.github.io/)
+
+---
+
 ## Repository Structure
 
 ```
