@@ -13,11 +13,11 @@
 
 Blue-green infrastructure is central to urban sustainability and resilience, but citywide screening metrics are still limited. This repository implements a simple and scalable **Green Infrastructure Potential Index (GIPI)** workflow that spatially aggregates the potential to alleviate:
 
-- hydrological stresses,
-- heat-related stresses,
-- air-quality-related stresses.
+- hydrological component,
+- heat-related component,
+- air-quality-related component.
 
-The workflow combines spatial raster and polygon inputs in ArcGIS, computes component-level city averages, produces a composite GIPI score, and classifies cities according to their aggregate BGI potential. The included results indicate that **NYC, Houston, and Chicago** lead the ranking among the evaluated U.S. cities.
+The workflow combines spatial raster and polygon inputs in ArcGIS, computes component-level city averages, produces a composite GIPI score, analyzes uncertainty, and classifies cities according to their aggregate BGI potential. The results indicate that **NYC, Houston, and Chicago** rank highest among the evaluated U.S. cities.
 
 ---
 
@@ -45,19 +45,19 @@ bgipotential/
 
 - Spatial preprocessing: Project city boundaries to NAD 1983 Albers and align rasters using the impervious surface raster as the snap raster and cell size reference.
 
-- Component computation: Compute hydrological risk, heat severity, and air-quality components from normalized tabular variables and spatial layers.
+- Component computation: Compute hydrological, heat severity, and air-quality components from normalized tabular variables and spatial layers.
 
 - Zonal aggregation: Use city boundaries to calculate zonal mean component values and write them to the master city table.
 
-- Composite index: Calculate the tabular GIPI score as:
+- Composite index: Calculate the tabular classic GIPI score as:
 
   ```text
   GIPI = 0.6 * HydroRiskAvg + 0.3 * HeatRiskAvg + 0.1 * AQAvg
   ```
 
-- Classification: Use K-means and fuzzy C-means clustering to classify cities based on hydrological, heat, and air-quality component averages.
+- Classification: Use fuzzy C-means clustering to classify cities based on hydrological, heat, and air-quality component averages.
 
-- Visualization: Generate 3D clustering plots for city-level BGI potential classes.
+- Visualization: Visualizes results.
 
 ---
 
