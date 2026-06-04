@@ -1,6 +1,6 @@
 # BGIpotential
 
-> Blue-Green Infrastructure Potential. This repository contains the computational workflow used to estimate and classify citywide blue-green infrastructure (BGI) potential across major U.S. cities. It accompanies the manuscript *Ranking the aggregate potential for blue-green infrastructure in U.S. cities*.
+> Blue-Green Infrastructure Potential. This repository contains the computational workflow used to estimate, uncertainty analyze, classify, and visualize citywide blue-green infrastructure (BGI) potential across major U.S. cities. It accompanies the manuscript *Ranking the aggregate potential for blue-green infrastructure in U.S. cities*.
 
 [![Made with Jupyter](https://img.shields.io/badge/Made%20with-Jupyter-F37626.svg)](https://jupyter.org)
 [![Python](https://img.shields.io/badge/python-3.11+-blue.svg)](https://www.python.org/)
