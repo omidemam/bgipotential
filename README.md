@@ -140,9 +140,9 @@ blue-green infrastructure, green infrastructure potential index, stormwater, urb
 ## Contact
 
 For questions, feedback, or collaboration opportunities, please contact:
-[omarwani@nyu.edu](mailto:omarwani@nyu.edu)
-[npm2054@nyu.edu](mailto:npm2054@nyu.edu)
-[berina.k@nyu.edu](mailto:berina.k@nyu.edu)
+[omarwani@nyu.edu](mailto:omarwani@nyu.edu),
+[npm2054@nyu.edu](mailto:npm2054@nyu.edu),
+[berina.k@nyu.edu](mailto:berina.k@nyu.edu),
 [omid.emamjomehzadeh@nyu.edu](mailto:omid.emamjomehzadeh@nyu.edu)
 
 ---
