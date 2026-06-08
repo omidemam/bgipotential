@@ -27,7 +27,7 @@ GIPI = 0.60 * HydroRiskAvg + 0.30 * HeatRiskAvg + 0.10 * AQAvg
 
 Project website and visual materials:
 
-[https://natem5384.github.io/gipi.github.io/](https://natem5384.github.io/gipi.github.io/)
+[https://bgipotential.github.io/](https://bgipotential.github.io/)
 
 ## Repository Structure
 
