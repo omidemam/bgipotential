@@ -131,12 +131,6 @@ Nate Mestre, Berina Mina Kilicarslan, Mason Majszak, Omid Emamjomehzadeh, Shalin
 
 ---
 
-## Keywords
-
-blue-green infrastructure, green infrastructure potential index, stormwater, urban heat, air quality, urban resilience, spatial analysis
-
----
-
 ## Contact
 
 For questions, feedback, or collaboration opportunities, please contact:
