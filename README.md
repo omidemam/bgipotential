@@ -17,7 +17,7 @@ Blue-green infrastructure is central to urban sustainability and resilience, but
 - heat-related component,
 - air-quality-related component.
 
-The workflow combines spatial raster and polygon inputs in ArcGIS, computes component-level city averages, produces a composite GIPI score, analyzes uncertainty, and classifies cities according to their aggregate BGI potential. The results indicate that **NYC, Houston, and Chicago** rank highest among the evaluated U.S. cities.
+The workflow combines spatial raster and polygon inputs in ArcGIS, computes component-level city averages, produces a composite GIPI score, analyzes uncertainty, and classifies cities according to their aggregate BGI potential.
 
 ---
 
