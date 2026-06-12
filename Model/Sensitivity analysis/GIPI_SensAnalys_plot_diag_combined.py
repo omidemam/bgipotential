@@ -1,4 +1,4 @@
-# SENSITIVITY ANALYSIS — 2-Simplex Grid Search with R² vs. Base Weights
+# SENSITIVITY ANALYSIS — 2-Simplex Grid Search with Spearman rho vs. Base Weights
 # This script is a sensitivity analysis of a composite index called the Green Infrastructure Potential Index,
 # quantifying the potential of green infrastructure to mitigate urban heat island effect, flooding, and air pollution.
 #
@@ -93,17 +93,17 @@ def sample_simplex(n_sims, rng):
 
 
 # ─────────────────────────────────────────────
-# STEP 4 — Run grid search and compute R² vs. base ranking
+# STEP 4 — Run grid search and compute Spearman rho vs. base ranking
 # ─────────────────────────────────────────────
 def run_grid_search(X, base_weights, weight_schemes, city_names):
     """
     For each sampled weight scheme:
       1. Rank all cities.
-      2. Compute R² (squared Pearson correlation) between that ranking
-         and the base-weight ranking across all cities.
+      2. Compute Spearman rank correlation between that ranking and the
+         base-weight ranking across all cities.
       3. Record every city's rank for that trial (used for rank distributions).
     Returns:
-      results      — DataFrame of weight schemes + R², sorted by R² descending.
+      results      — DataFrame of weight schemes + Spearman rho, sorted descending.
       all_ranks_df — DataFrame (n_sims × n_cities) of per-trial city ranks.
     """
     base_ranks = rank_cities(X, base_weights)
@@ -116,8 +116,7 @@ def run_grid_search(X, base_weights, weight_schemes, city_names):
         w1, w2, w3 = w
         trial_ranks = rank_cities(X, w)
 
-        r = np.corrcoef(base_ranks, trial_ranks)[0, 1]
-        r_squared = r ** 2
+        rho = np.corrcoef(base_ranks, trial_ranks)[0, 1]
 
         # Calculate the mean absolute shift in rank across all cities
         mean_rank_shift = np.mean(np.abs(trial_ranks - base_ranks))
@@ -126,7 +125,7 @@ def run_grid_search(X, base_weights, weight_schemes, city_names):
             "w_hydro"       : round(w1, 4),
             "w_heat"        : round(w2, 4),
             "w_aq"          : round(w3, 4),
-            "R2"            : round(r_squared, 6),
+            "SpearmanRho"   : round(rho, 6),
             "MeanRankShift" : round(mean_rank_shift, 4),
         })
         rank_rows.append(trial_ranks)
@@ -134,7 +133,7 @@ def run_grid_search(X, base_weights, weight_schemes, city_names):
     results      = pd.DataFrame(records)
     all_ranks_df = pd.DataFrame(rank_rows, columns=city_names)
 
-    return results.sort_values("R2", ascending=False).reset_index(drop=True), all_ranks_df
+    return results.sort_values("SpearmanRho", ascending=False).reset_index(drop=True), all_ranks_df
 
 
 # ─────────────────────────────────────────────
@@ -389,7 +388,7 @@ def plot_combined_ternary(results, base_weights, output_path,
     """
     Side-by-side ternary contour plot (rows a & b) with an optional ridgeline
     joy-plot panel (c) below spanning the full figure width.
-    Left (a): Mean Absolute Rank Shift.  Right (b): R² vs. base ranking.
+    Left (a): Mean Absolute Rank Shift. Right (b): Spearman rho vs. base ranking.
     Bottom (c): Rank KDE distributions for focus cities.
     A gray vertical divider is drawn between the two top panels.
     """
@@ -398,7 +397,7 @@ def plot_combined_ternary(results, base_weights, output_path,
     w1    = results["w_hydro"].values
     w2    = results["w_heat"].values
     w3    = results["w_aq"].values
-    r2    = results["R2"].values
+    rho = results["SpearmanRho"].values
     shift = results["MeanRankShift"].values
 
     x, y = simplex_to_cartesian(w1, w2, w3)
@@ -468,13 +467,13 @@ def plot_combined_ternary(results, base_weights, output_path,
                         base_weights=base_weights, bw_color="#1a237e",
                         shift_label=True, fig=fig)
 
-    # ── Right panel (b): R² ───────────────────────────────────────────────
+    # ── Right panel (b): Spearman rho ─────────────────────────────────────
     triang2 = mtri.Triangulation(x, y)
     triang2.set_mask(tri_mask)
-    levels_r2 = np.linspace(r2.min(), r2.max(), n_levels + 1)
-    _draw_ternary_panel(ax_right, triang2, r2, levels_r2,
+    levels_rho = np.linspace(rho.min(), rho.max(), n_levels + 1)
+    _draw_ternary_panel(ax_right, triang2, rho, levels_rho,
                         cmap="YlOrRd",
-                        cbar_label="R²  (vs. base weights)",
+                        cbar_label="Spearman rank correlation, ρ\n(vs. base-weight ranking)",
                         base_weights=base_weights, bw_color="#1b5e20",
                         shift_label=False, fig=fig)
 
@@ -611,20 +610,20 @@ weight_schemes = sample_simplex(N_SIMS, rng)
 results, all_ranks_df = run_grid_search(X, BASE_WEIGHTS, weight_schemes, city_names)
 
 # ─────────────────────────────────────────────
-# STEP 8 — R² Summary
+# STEP 8 — Spearman rank-correlation summary
 # ─────────────────────────────────────────────
 print(f"\nBase weights — Hydro: {BASE_WEIGHTS[0]}, Heat: {BASE_WEIGHTS[1]}, AQ: {BASE_WEIGHTS[2]}  |  {N_SIMS:,} Dirichlet samples\n")
-print(f"--- R² Summary ---")
-print(f"Highest R²:  {results['R2'].max():.6f}  "
+print(f"--- Spearman Rank Correlation Summary ---")
+print(f"Highest rho:  {results['SpearmanRho'].max():.6f}  "
       f"(w_hydro={results.iloc[0]['w_hydro']}, "
       f"w_heat={results.iloc[0]['w_heat']}, "
       f"w_aq={results.iloc[0]['w_aq']})")
-print(f"Lowest  R²:  {results['R2'].min():.6f}  "
+print(f"Lowest  rho:  {results['SpearmanRho'].min():.6f}  "
       f"(w_hydro={results.iloc[-1]['w_hydro']}, "
       f"w_heat={results.iloc[-1]['w_heat']}, "
       f"w_aq={results.iloc[-1]['w_aq']})")
-print(f"Mean    R²:  {results['R2'].mean():.6f}")
-print(f"Median  R²:  {results['R2'].median():.6f}")
+print(f"Mean    rho:  {results['SpearmanRho'].mean():.6f}")
+print(f"Median  rho:  {results['SpearmanRho'].median():.6f}")
 
 print(f"\n--- Mean Absolute Rank Shift Summary ---")
 print(f"Largest Shift:  {results['MeanRankShift'].max():.4f}")
